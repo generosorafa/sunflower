@@ -1,0 +1,27 @@
+name: Validate static site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Check JavaScript syntax
+        run: |
+          node --check data.js
+          node --check app.js
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f styles.css
+          test -f data.js
+          test -f app.js
