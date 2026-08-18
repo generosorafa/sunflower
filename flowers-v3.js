@@ -1,5 +1,6 @@
 const DATA = window.SFL_DATA;
 const STORAGE_KEY = "sfl-companion-v1";
+const V3_STORAGE_KEY = "sfl-companion-flowers-v3";
 const SET1_SEEDS = new Set(["Sunpetal Seed", "Bloom Seed", "Lily Seed"]);
 const SET2_SEEDS = new Set(["Edelweiss Seed", "Gladiolus Seed", "Lavender Seed", "Clover Seed"]);
 
@@ -23,21 +24,49 @@ function slugify(name) {
     .toLowerCase();
 }
 
-function readState() {
+function readBaseState() {
   try {
     const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
     state.flowers ||= {};
     state.fish ||= {};
     state.filters ||= {};
-    state.flowerRecipes ||= {};
     return state;
   } catch {
-    return { flowers: {}, fish: {}, filters: {}, flowerRecipes: {} };
+    return { flowers: {}, fish: {}, filters: {} };
   }
 }
 
-function writeState(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function readV3State() {
+  try {
+    const v3 = JSON.parse(localStorage.getItem(V3_STORAGE_KEY) || "{}");
+    v3.owned ||= {};
+    v3.recipes ||= {};
+    return v3;
+  } catch {
+    return { owned: {}, recipes: {} };
+  }
+}
+
+function readState() {
+  return { ...readBaseState(), _v3: readV3State() };
+}
+
+function writeV3(v3) {
+  localStorage.setItem(V3_STORAGE_KEY, JSON.stringify(v3));
+}
+
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj || {}, key);
+}
+
+function isOwned(state, name) {
+  if (hasOwn(state._v3?.owned, name)) return !!state._v3.owned[name];
+  return !!state.flowers?.[name];
+}
+
+function recipesFor(state, name) {
+  const list = state._v3?.recipes?.[name];
+  return Array.isArray(list) ? list : [];
 }
 
 function seedInfo(seedName) {
@@ -128,13 +157,13 @@ function bindImages(root = document) {
 
 function progressForSeed(seedName, state) {
   const flowers = DATA.flowers.filter((flower) => flower.seed === seedName);
-  const owned = flowers.filter((flower) => !!state.flowers[flower.name]).length;
+  const owned = flowers.filter((flower) => isOwned(state, flower.name)).length;
   return { owned, total: flowers.length, pct: flowers.length ? Math.round(owned / flowers.length * 100) : 0 };
 }
 
 function overallProgress(state) {
-  const flowerOwned = DATA.flowers.filter((flower) => !!state.flowers[flower.name]).length;
-  const fishOwned = DATA.fish.filter((fish) => !!state.fish[fish.name]).length;
+  const flowerOwned = DATA.flowers.filter((flower) => isOwned(state, flower.name)).length;
+  const fishOwned = DATA.fish.filter((fish) => !!state.fish?.[fish.name]).length;
   const total = DATA.flowers.length + DATA.fish.length;
   return {
     flowerOwned,
@@ -176,7 +205,7 @@ function visibleFlowers(state) {
 
   return DATA.flowers.filter((flower) => {
     const seed = seedInfo(flower.seed);
-    const owned = !!state.flowers[flower.name];
+    const owned = isOwned(state, flower.name);
     const hay = `${flower.name} ${flower.family} ${flower.seed}`.toLowerCase();
     if (q && !hay.includes(q)) return false;
     if (filter === "missing" && owned) return false;
@@ -188,7 +217,7 @@ function visibleFlowers(state) {
 }
 
 function recipeChips(flower, state) {
-  const recipes = Array.isArray(state.flowerRecipes?.[flower.name]) ? state.flowerRecipes[flower.name] : [];
+  const recipes = recipesFor(state, flower.name);
   if (!recipes.length) {
     return `<div class="flower-v3-empty-recipe">
       <span>🔎</span>
@@ -206,7 +235,7 @@ function recipeChips(flower, state) {
 }
 
 function recipeSelect(flower, state) {
-  const selected = new Set(Array.isArray(state.flowerRecipes?.[flower.name]) ? state.flowerRecipes[flower.name] : []);
+  const selected = new Set(recipesFor(state, flower.name));
   const options = validCrossbreeds(flower.seed).filter((item) => !selected.has(item.name));
   const base = options.filter((item) => item.kind === "resource");
   const flowerOptions = options.filter((item) => item.kind === "flower");
@@ -222,7 +251,7 @@ function recipeSelect(flower, state) {
 }
 
 function flowerCard(flower, state) {
-  const owned = !!state.flowers[flower.name];
+  const owned = isOwned(state, flower.name);
   const seed = seedInfo(flower.seed);
   const seasonal = flower.season !== "all";
   const season = $("#seasonSelect")?.value || state.season || "spring";
@@ -343,26 +372,27 @@ function render() {
 
 function toggleFlower(name) {
   const state = readState();
-  state.flowers[name] = !state.flowers[name];
-  writeState(state);
+  const v3 = readV3State();
+  v3.owned[name] = !isOwned(state, name);
+  writeV3(v3);
   render();
 }
 
 function addRecipe(name, crossbreed) {
   if (!crossbreed) return;
-  const state = readState();
-  const list = Array.isArray(state.flowerRecipes[name]) ? state.flowerRecipes[name] : [];
-  if (!list.includes(crossbreed)) state.flowerRecipes[name] = [...list, crossbreed];
-  state.flowers[name] = true;
-  writeState(state);
+  const v3 = readV3State();
+  const list = Array.isArray(v3.recipes[name]) ? v3.recipes[name] : [];
+  if (!list.includes(crossbreed)) v3.recipes[name] = [...list, crossbreed];
+  v3.owned[name] = true;
+  writeV3(v3);
   render();
 }
 
 function removeRecipe(name, crossbreed) {
-  const state = readState();
-  const list = Array.isArray(state.flowerRecipes[name]) ? state.flowerRecipes[name] : [];
-  state.flowerRecipes[name] = list.filter((item) => item !== crossbreed);
-  writeState(state);
+  const v3 = readV3State();
+  const list = Array.isArray(v3.recipes[name]) ? v3.recipes[name] : [];
+  v3.recipes[name] = list.filter((item) => item !== crossbreed);
+  writeV3(v3);
   render();
 }
 
@@ -377,28 +407,32 @@ function install() {
   $("#levelInput")?.addEventListener("input", () => setTimeout(render, 0));
 
   document.addEventListener("click", (event) => {
-    const toggle = event.target.closest("[data-v3-toggle-flower]");
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target) return;
+
+    const toggle = target.closest("[data-v3-toggle-flower]");
     if (toggle) {
       event.preventDefault();
       toggleFlower(toggle.dataset.v3ToggleFlower);
       return;
     }
 
-    const remove = event.target.closest("[data-v3-remove-recipe]");
+    const remove = target.closest("[data-v3-remove-recipe]");
     if (remove) {
       event.preventDefault();
       removeRecipe(remove.dataset.v3RemoveRecipe, remove.dataset.v3Crossbreed);
       return;
     }
 
-    const jump = event.target.closest("[data-v3-seed-jump]");
+    const jump = target.closest("[data-v3-seed-jump]");
     if (jump) {
       document.getElementById(`flower-seed-${jump.dataset.v3SeedJump}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 
   document.addEventListener("change", (event) => {
-    const select = event.target.closest("[data-v3-add-recipe]");
+    const target = event.target instanceof Element ? event.target : null;
+    const select = target?.closest("[data-v3-add-recipe]");
     if (select) addRecipe(select.dataset.v3AddRecipe, select.value);
   });
 
