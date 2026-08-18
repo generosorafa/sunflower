@@ -1,8 +1,50 @@
 window.SFL_DATA = {
   meta: {
-    version: "1.0.0",
+    version: "2.0.0",
     updated: "2026-08-17",
-    note: "Dados principais conferidos no código público atual do Sunflower Land. Preços de mercado são editáveis porque variam constantemente."
+    note: "Dados principais conferidos no código público atual do Sunflower Land. Preços de mercado são editáveis porque variam constantemente.",
+    assetNote: "As imagens são carregadas, quando disponíveis, dos assets públicos do repositório oficial do Sunflower Land. Assets Sunnyside/protegidos usam fallback visual."
+  },
+
+  assetBase: "https://raw.githubusercontent.com/sunflower-land/sunflower-land/main/src/assets",
+  assetAliases: {
+    "Sunpetal Seed": ["flowers/sunpetal_seed.webp"],
+    "Bloom Seed": ["flowers/bloom_seed.webp"],
+    "Lily Seed": ["flowers/lily_seed.webp"],
+    "Lavender Seed": ["flowers/lavender_seed.webp"],
+    "Gladiolus Seed": ["flowers/gladiolus_seed.webp"],
+    "Clover Seed": ["flowers/clover_seed.webp"],
+    "Edelweiss Seed": ["flowers/edelweiss_seed.webp"],
+
+    "Butterflyfish": ["fish/butterfly_fish.png"],
+    "Angelfish": ["fish/angel_fish.png"],
+    "Cobia": ["fish/copia.png", "fish/cobia.png"],
+    "Napoleanfish": ["fish/napoleanfish.png", "fish/napoleonfish.png"],
+
+    "Basic Scarecrow": ["sfts/aoe/basic_scarecrow.png"],
+    "Scary Mike": ["sfts/aoe/scary_mike.png"],
+    "Laurie the Chuckle Crow": ["sfts/aoe/laurie.png"],
+    "Bale": ["sfts/aoe/bale.png"],
+    "Immortal Pear": ["sfts/immortal_pear.webp"],
+    "Iron Beetle": ["sfts/iron_beetle.webp", "sfts/iron_beetle.png"],
+    "Gold Beetle": ["sfts/gold_beetle.webp", "sfts/gold_beetle.png"],
+    "Butterfly": ["sfts/butterfly.webp", "sfts/butterfly.png"],
+    "Fairy Circle": ["sfts/fairy_circle.webp", "sfts/fairy_circle.png"],
+    "Macaw": ["sfts/macaw.webp", "sfts/macaw.png"],
+
+    "Fish Flake": ["processedFoods/fish_flake.webp"],
+    "Fish Stick": ["processedFoods/fish_stick.webp"],
+    "Fish Oil": ["processedFoods/fish_oil.webp"],
+    "Crab Stick": ["processedFoods/crab_stick.webp"],
+    "Crimstone Infused Fish Oil": ["processedFoods/crimstone_infused_fish_oil.webp"],
+    "Creamy Crab Bite": ["processedFoods/creamy_crab_bite.webp"],
+    "Furikake Sprinkle": ["processedFoods/furikake_sprinkle.webp"],
+    "Surimi Rice Bowl": ["processedFoods/surimi_rice_bowl.webp"],
+
+    "Grape": ["greenhouse/grape.webp"],
+    "Olive": ["greenhouse/olive.webp"],
+    "Rice": ["greenhouse/rice.webp"],
+    "Gem": ["icons/gem.webp"]
   },
 
   links: [
@@ -211,7 +253,7 @@ window.SFL_DATA = {
     {name:"Victoria",id:"victoria",reward:"coins",level:30,focus:"Pedidos avançados",skill:"Victoria's Secretary"},
 
     {name:"Grimbly",id:"grimbly",reward:"sfl",level:10,focus:"FLOWER / SFL · pedido gerado pelo servidor"},
-    {name:"Grimtooth",id:"grimtooth",reward:"sfl",level:12,focus:"FLOWER / SFL · requer Cropkeeper para alguns goblins"},
+    {name:"Grimtooth",id:"grimtooth",reward:"sfl",level:12,focus:"FLOWER / SFL · reputação pode limitar o acesso"},
     {name:"Grubnuk",id:"grubnuk",reward:"sfl",level:16,focus:"FLOWER / SFL · pedido gerado pelo servidor"},
     {name:"Gambit",id:"gambit",reward:"sfl",level:25,focus:"FLOWER / SFL · pedido gerado pelo servidor"},
     {name:"Gordo",id:"gordo",reward:"sfl",level:30,focus:"FLOWER / SFL · pedido gerado pelo servidor"},
