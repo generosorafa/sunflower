@@ -1,10 +1,6 @@
 @import url("./styles-base.css");
 
-/* V2.1 — SFL pixel-art image scaling
-   The official public sprites are intentionally tiny pixel assets. The base stylesheet
-   used auto dimensions, which preserved that intrinsic size. These overrides upscale
-   them while keeping the original pixel-art character crisp. */
-
+/* V2.1 — escala correta para pixel art oficial */
 .asset-media img {
   width: 100%;
   height: 100%;
@@ -15,78 +11,143 @@
   image-rendering: crisp-edges;
   filter: drop-shadow(0 12px 18px rgba(0,0,0,.20));
 }
+.visual-hero { min-height:220px; padding:18px; }
+.asset-xl { width:180px; height:180px; max-width:78%; max-height:190px; background:transparent; }
+.fish-hero .asset-xl { width:200px; height:180px; max-width:82%; }
+.craft-hero .asset-xl { width:180px; height:180px; }
+.asset-xs img,.asset-sm img,.asset-md img,.asset-lg img { width:82%; height:82%; }
+.asset-xl img { width:88%; height:88%; }
 
-.visual-hero {
-  min-height: 220px;
-  padding: 18px;
+/* V3 — Flores agrupadas por semente e receitas pessoais */
+.flower-v3-guide { display:grid; gap:12px; margin-bottom:18px; }
+.flower-v3-truth {
+  display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border:1px solid rgba(115,222,138,.20);
+  border-radius:16px; background:linear-gradient(135deg,var(--accent-soft),var(--surface));
+}
+.flower-v3-truth-icon { font-size:22px; }
+.flower-v3-truth strong { display:block; font-size:12px; }
+.flower-v3-truth p { font-size:11px; margin-top:4px; }
+.flower-v3-seed-nav { display:flex; gap:8px; overflow-x:auto; padding:2px 1px 5px; scrollbar-width:thin; }
+.flower-v3-seed-nav button {
+  min-width:145px; display:flex; align-items:center; gap:9px; text-align:left; padding:9px 11px; border-radius:13px;
+  border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer;
+}
+.flower-v3-seed-nav button:hover { border-color:var(--border-strong); transform:translateY(-1px); }
+.flower-v3-seed-nav button > span:last-child { display:grid; }
+.flower-v3-seed-nav b { font-size:10px; }
+.flower-v3-seed-nav small { color:var(--muted); font-size:9px; margin-top:2px; }
+.flower-v3-root { display:grid; gap:26px; }
+.flower-v3-group { scroll-margin-top:88px; }
+.flower-v3-group-head {
+  position:relative; display:flex; align-items:center; justify-content:space-between; gap:18px; padding:14px 16px;
+  border:1px solid var(--border); background:var(--surface); border-radius:18px; overflow:hidden; margin-bottom:10px;
+}
+.flower-v3-seed-identity { display:flex; gap:13px; align-items:center; min-width:0; }
+.flower-v3-seed-title-line { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.flower-v3-seed-title-line h3 { font-size:18px; }
+.flower-v3-seed-identity p { font-size:10px; margin-top:3px; }
+.flower-v3-seed-meta { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
+.flower-v3-seed-meta span,.flower-v3-season-pill {
+  font-size:8px; font-weight:800; padding:4px 7px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); color:var(--muted);
+}
+.flower-v3-season-pill.on { color:var(--accent); background:var(--accent-soft); }
+.flower-v3-season-pill.off { color:var(--danger); background:var(--danger-soft); }
+.flower-v3-group-progress { width:min(280px,28vw); height:7px; border-radius:999px; background:var(--surface-3); overflow:hidden; }
+.flower-v3-group-progress span { display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+.flower-v3-howto {
+  display:grid; gap:10px; padding:13px 15px; margin-bottom:12px; border:1px solid var(--border); border-radius:16px;
+  background:linear-gradient(135deg,rgba(117,201,255,.055),var(--surface));
+}
+.flower-v3-howto-title { display:flex; align-items:flex-start; gap:9px; }
+.flower-v3-howto-title strong { display:block; font-size:11px; }
+.flower-v3-howto-title small { color:var(--muted); display:block; font-size:9px; margin-top:2px; }
+.flower-v3-crossbreed-list { display:flex; flex-wrap:wrap; gap:5px; }
+.flower-v3-crossbreed-list span {
+  font-size:9px; color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:5px 8px; background:var(--surface-2);
+}
+.flower-v3-crossbreed-list b { color:var(--text); }
+.flower-v3-howto-foot { color:var(--muted); font-size:9px; }
+.flower-v3-howto-foot b { color:var(--text); }
+.flower-v3-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:12px; }
+.flower-v3-card {
+  overflow:hidden; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:var(--shadow-sm); transition:.2s ease;
+}
+.flower-v3-card:hover { transform:translateY(-2px); border-color:var(--border-strong); }
+.flower-v3-card.owned { border-color:rgba(115,222,138,.40); }
+.flower-v3-art {
+  position:relative; min-height:190px; display:grid; place-items:center; overflow:hidden; border-bottom:1px solid var(--border);
+  background:radial-gradient(circle at 50% 52%,rgba(115,222,138,.17),transparent 49%),linear-gradient(180deg,rgba(255,255,255,.025),transparent);
+}
+.flower-v3-owned-label {
+  position:absolute; top:10px; right:10px; padding:5px 8px; border-radius:999px; color:#072210; background:var(--accent); font-size:8px; font-weight:900;
+}
+.flower-v3-media { position:relative; display:grid; place-items:center; flex:0 0 auto; }
+.flower-v3-media img {
+  position:relative; z-index:2; width:100%; height:100%; object-fit:contain; image-rendering:pixelated; image-rendering:crisp-edges;
+  filter:drop-shadow(0 13px 18px rgba(0,0,0,.20));
+}
+.flower-v3-fallback { position:absolute; z-index:1; font-size:26px; opacity:.55; }
+.flower-v3-media.loaded .flower-v3-fallback { opacity:0; }
+.flower-v3-flower-image { width:145px; height:145px; }
+.flower-v3-seed-image { width:58px; height:58px; border-radius:13px; background:var(--surface-2); }
+.flower-v3-nav-image { width:30px; height:30px; }
+.flower-v3-body { display:grid; gap:10px; padding:14px; }
+.flower-v3-title-row { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.flower-v3-title-row h4 { font-family:"Manrope",sans-serif; margin:0; font-size:15px; letter-spacing:-.03em; }
+.flower-v3-title-row > div > span { display:block; color:var(--muted); font-size:9px; margin-top:2px; }
+.flower-v3-check {
+  width:32px; height:32px; flex:0 0 auto; border:1px solid var(--border-strong); border-radius:10px; background:var(--surface-2); color:#092211; cursor:pointer; font-weight:900;
+}
+.flower-v3-card.owned .flower-v3-check { background:var(--accent); border-color:transparent; }
+.flower-v3-badges { display:flex; flex-wrap:wrap; gap:5px; }
+.flower-v3-badges span {
+  border:1px solid var(--border); background:var(--surface-2); color:var(--muted); border-radius:999px; padding:4px 7px; font-size:8px; font-weight:800;
+}
+.flower-v3-badges .epic { color:var(--purple); background:var(--purple-soft); }
+.flower-v3-badges .current { color:var(--accent); background:var(--accent-soft); }
+.flower-v3-recipe-box { display:grid; gap:8px; padding-top:10px; border-top:1px solid var(--border); }
+.flower-v3-recipe-heading strong { display:block; font-size:10px; }
+.flower-v3-recipe-heading small { display:block; color:var(--muted); font-size:8px; margin-top:1px; }
+.flower-v3-empty-recipe { display:flex; align-items:flex-start; gap:8px; padding:9px; border-radius:11px; background:var(--surface-2); }
+.flower-v3-empty-recipe strong { display:block; font-size:9px; }
+.flower-v3-empty-recipe small { display:block; color:var(--muted); font-size:8px; margin-top:2px; }
+.flower-v3-recipe-list { display:grid; gap:5px; }
+.flower-v3-recipe-chip {
+  display:flex; align-items:center; justify-content:space-between; gap:7px; padding:7px 8px; border-radius:10px; border:1px solid rgba(115,222,138,.16); background:var(--accent-soft);
+}
+.flower-v3-recipe-text { color:var(--muted); font-size:8px; }
+.flower-v3-recipe-text b { color:var(--text); }
+.flower-v3-recipe-chip button { border:0; background:transparent; color:var(--muted); cursor:pointer; font-size:14px; line-height:1; }
+.flower-v3-add-recipe { display:grid; gap:5px; }
+.flower-v3-add-recipe label { color:var(--muted); font-size:8px; font-weight:800; }
+.flower-v3-add-recipe select { font-size:9px; padding:8px 9px; }
+.flower-v3-no-results { padding:26px; text-align:center; border:1px solid var(--border); border-radius:16px; color:var(--muted); background:var(--surface); }
+
+@media (max-width:700px) {
+  /* Mais agressivo no celular: o pedido foi para os sprites realmente grandes. */
+  .visual-hero { min-height:245px; padding:10px; }
+  .asset-xl,.craft-hero .asset-xl { width:215px; height:215px; max-width:86vw; max-height:220px; }
+  .fish-hero .asset-xl { width:235px; height:215px; max-width:90vw; }
+
+  .flower-v3-truth { padding:12px; }
+  .flower-v3-seed-nav button { min-width:132px; }
+  .flower-v3-group-head { align-items:flex-start; padding:12px; }
+  .flower-v3-group-progress { width:86px; margin-top:8px; }
+  .flower-v3-seed-image { width:52px; height:52px; }
+  .flower-v3-grid { grid-template-columns:1fr; gap:11px; }
+  .flower-v3-art { min-height:250px; }
+  .flower-v3-flower-image { width:205px; height:205px; max-width:78vw; max-height:78vw; }
+  .flower-v3-body { padding:13px; }
+  .flower-v3-title-row h4 { font-size:17px; }
+  .flower-v3-check { width:38px; height:38px; }
+  .flower-v3-crossbreed-list { gap:4px; }
+  .flower-v3-crossbreed-list span { font-size:8px; }
 }
 
-.asset-xl {
-  width: 180px;
-  height: 180px;
-  max-width: 78%;
-  max-height: 190px;
-  background: transparent;
-}
-
-.fish-hero .asset-xl {
-  width: 200px;
-  height: 180px;
-  max-width: 82%;
-}
-
-.craft-hero .asset-xl {
-  width: 180px;
-  height: 180px;
-}
-
-/* Small ingredient/tool icons are also sprites and need explicit scaling. */
-.asset-xs img,
-.asset-sm img,
-.asset-md img,
-.asset-lg img {
-  width: 82%;
-  height: 82%;
-}
-
-/* Keep large sprites airy instead of touching the edges of the card. */
-.asset-xl img {
-  width: 88%;
-  height: 88%;
-}
-
-@media (max-width: 700px) {
-  .visual-hero {
-    min-height: 190px;
-    padding: 14px;
-  }
-
-  .asset-xl,
-  .craft-hero .asset-xl {
-    width: 155px;
-    height: 155px;
-    max-width: 76vw;
-  }
-
-  .fish-hero .asset-xl {
-    width: 175px;
-    height: 155px;
-    max-width: 80vw;
-  }
-}
-
-@media (min-width: 1200px) {
-  .visual-hero {
-    min-height: 235px;
-  }
-
-  .asset-xl {
-    width: 195px;
-    height: 195px;
-  }
-
-  .fish-hero .asset-xl {
-    width: 220px;
-    height: 195px;
-  }
+@media (min-width:1200px) {
+  .visual-hero { min-height:235px; }
+  .asset-xl { width:195px; height:195px; }
+  .fish-hero .asset-xl { width:220px; height:195px; }
+  .flower-v3-art { min-height:210px; }
+  .flower-v3-flower-image { width:165px; height:165px; }
 }
