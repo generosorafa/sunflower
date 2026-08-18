@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#07100c" />
-  <meta name="description" content="Companion leve para Sunflower Land: flores, pesca, crafting, cozinha, XP/SFL e entregas." />
-  <title>SFL Companion · Progresso, XP e SFL</title>
+  <meta name="description" content="Companion visual para Sunflower Land: flores, pesca, crafting, cozinha, XP/SFL e entregas." />
+  <title>SFL Companion · Visual, XP e SFL</title>
+  <link rel="preconnect" href="https://raw.githubusercontent.com" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,7 +16,7 @@
     <div class="shell topbar-inner">
       <a class="brand" href="#dashboard" data-view-link="dashboard" aria-label="SFL Companion">
         <span class="brand-mark">🌻</span>
-        <span class="brand-copy"><strong>SFL Companion</strong><span>progresso sem planilha confusa</span></span>
+        <span class="brand-copy"><strong>SFL Companion</strong><span>visual · progresso · economia</span></span>
       </a>
 
       <div class="nav-scroll">
@@ -41,58 +42,61 @@
     <section id="dashboard" class="view active" aria-labelledby="dashboard-title">
       <div class="hero">
         <div>
-          <div class="eyebrow">🌱 Seu painel de progressão</div>
-          <h1 id="dashboard-title">O que vale fazer <span style="color:var(--accent)">agora</span>?</h1>
-          <p>Marque o que já conquistou, filtre pelo que está disponível na estação e use custo, XP e SFL para decidir o próximo passo sem ficar pulando entre várias páginas.</p>
+          <div class="eyebrow">🌱 Companion visual</div>
+          <h1 id="dashboard-title">Reconheça o item pela <span style="color:var(--accent)">imagem</span>, não pela memória.</h1>
+          <p>Flores, peixes, crafting, receitas e itens das entregas agora aparecem de forma visual sempre que o asset público oficial está disponível. Marque sua coleção e use os cálculos para decidir onde investir tempo e SFL.</p>
           <div class="hero-actions">
             <button class="primary-btn" data-go="cooking">Comparar XP / SFL</button>
-            <button class="ghost-btn" data-go="flowers">Ver faltantes</button>
-            <button class="ghost-btn" data-go="deliveries">Calcular entrega</button>
+            <button class="ghost-btn" data-go="flowers">Ver flores faltantes</button>
+            <button class="ghost-btn" data-go="fishing">Pescar nesta estação</button>
           </div>
         </div>
         <div class="hero-status">
-          <div class="metric"><div class="label">Estação selecionada</div><div id="heroSeason" class="value">🌸 Primavera</div><div class="hint">muda pesca e flores sazonais</div></div>
+          <div class="metric"><div class="label">Estação selecionada</div><div id="heroSeason" class="value">🌸 Primavera</div><div class="hint">muda o foco da pesca e flores sazonais</div></div>
           <div class="metric"><div class="label">Level</div><div id="heroLevel" class="value">25</div><div class="hint">filtra conteúdo bloqueado</div></div>
-          <div class="metric"><div class="label">Progresso</div><div id="heroProgress" class="value">0%</div><div class="hint">flores + peixes marcados</div></div>
+          <div class="metric"><div class="label">Coleção visual</div><div id="heroProgress" class="value">0%</div><div class="hint">flores + peixes marcados</div></div>
         </div>
       </div>
 
-      <div class="section-head"><div><h2>Configuração rápida</h2><p>Essas preferências ficam somente no seu navegador.</p></div></div>
+      <div class="section-head"><div><h2>Configuração rápida</h2><p>Preferências, checklists e preços ficam salvos somente no seu navegador.</p></div></div>
       <div class="grid grid-3">
         <div class="card">
           <h3>Estação</h3>
-          <p>Usada para destacar peixes pescáveis agora e a família de flor sazonal.</p>
-          <div class="field"><label for="seasonSelect">Estação atual</label><select id="seasonSelect"></select></div>
+          <p>Destaca os peixes pescáveis agora e as flores sazonais relevantes.</p>
+          <div class="field" style="margin-top:12px"><label for="seasonSelect">Estação atual</label><select id="seasonSelect"></select></div>
         </div>
         <div class="card">
           <h3>Level do Bumpkin</h3>
-          <p>O site mostra o que já está ao seu alcance e sinaliza desbloqueios futuros.</p>
-          <div class="field"><label for="levelInput">Level</label><input id="levelInput" type="number" min="1" max="300" inputmode="numeric" value="25" /></div>
+          <p>Mostra o que já está disponível para você e o que ainda está bloqueado.</p>
+          <div class="field" style="margin-top:12px"><label for="levelInput">Level</label><input id="levelInput" type="number" min="1" max="300" inputmode="numeric" value="25" /></div>
         </div>
         <div class="card">
           <h3>Dados locais</h3>
-          <p>Checklists, tema, estação e preços são salvos com LocalStorage. Nada é enviado para um servidor.</p>
-          <button id="resetBtn" class="ghost-btn">Limpar meus dados</button>
+          <p>Você pode limpar checklists, preços, tema e preferências a qualquer momento.</p>
+          <button id="resetBtn" class="ghost-btn" style="margin-top:12px">Limpar meus dados</button>
         </div>
       </div>
 
-      <div class="section-head"><div><h2>Seu progresso</h2><p>Um resumo vivo do que você já marcou.</p></div></div>
+      <div class="section-head"><div><h2>Seu progresso</h2><p>Resumo do que você já marcou dentro do companion.</p></div></div>
       <div class="grid grid-4" id="dashboardStats"></div>
 
-      <div class="section-head"><div><h2>Atalhos inteligentes</h2><p>Entre direto no módulo que responde a decisão que você está tentando tomar.</p></div></div>
+      <div class="section-head"><div><h2>Atalhos inteligentes</h2><p>Entre direto no módulo que responde à sua decisão atual.</p></div></div>
       <div class="grid grid-4">
-        <button class="card quick-card" data-go="flowers"><span class="arrow">→</span><span class="emoji">🌺</span><strong>Flores</strong><span>Marcar coleção e ver a próxima família</span></button>
-        <button class="card quick-card" data-go="fishing"><span class="arrow">→</span><span class="emoji">🎣</span><strong>Pesca da estação</strong><span>Focar só no que pode aparecer agora</span></button>
-        <button class="card quick-card" data-go="cooking"><span class="arrow">→</span><span class="emoji">🍕</span><strong>XP por SFL</strong><span>Descobrir as receitas mais eficientes</span></button>
+        <button class="card quick-card" data-go="flowers"><span class="arrow">→</span><span class="emoji">🌺</span><strong>Flores</strong><span>Visualizar e marcar a coleção</span></button>
+        <button class="card quick-card" data-go="fishing"><span class="arrow">→</span><span class="emoji">🎣</span><strong>Pesca da estação</strong><span>Focar apenas no que pode aparecer agora</span></button>
+        <button class="card quick-card" data-go="cooking"><span class="arrow">→</span><span class="emoji">🍕</span><strong>XP por SFL</strong><span>Comparar custo, XP/dia e eficiência</span></button>
         <button class="card quick-card" data-go="deliveries"><span class="arrow">→</span><span class="emoji">💸</span><strong>Entrega com lucro</strong><span>Comparar custo dos itens × recompensa</span></button>
       </div>
 
-      <div class="section-head"><div><h2>Links úteis</h2><p>O jogo e as referências que inspiraram este painel.</p></div></div>
+      <div class="section-head"><div><h2>Links úteis</h2><p>O jogo e as páginas de referência ficam sempre a um clique.</p></div></div>
       <div id="linkGrid" class="grid grid-4"></div>
     </section>
 
     <section id="flowers" class="view" aria-labelledby="flowers-title">
-      <div class="section-head"><div><div class="eyebrow">🌺 Coleção</div><h2 id="flowers-title">Flores sem confusão</h2><p>Marque cada descoberta. O site separa por semente, mostra nível mínimo e destaca a família da estação.</p></div><a class="ghost-btn" href="https://sfl.world/info/flowers" target="_blank" rel="noopener">Abrir SFL.World ↗</a></div>
+      <div class="section-head">
+        <div><div class="eyebrow">🌺 Coleção visual</div><h2 id="flowers-title">Flores sem confusão</h2><p>Veja a aparência real da flor, marque o que já tem e filtre por estação, nível, família ou faltantes.</p></div>
+        <a class="ghost-btn" href="https://sfl.world/info/flowers" target="_blank" rel="noopener">Abrir SFL.World ↗</a>
+      </div>
       <div class="progress-card"><div class="progress-top"><strong>Coleção de flores</strong><span id="flowerProgressText">0 / 0</span></div><div class="progress-track"><div id="flowerProgress" class="progress-fill"></div></div></div>
       <div class="toolbar">
         <div class="search-wrap"><input id="flowerSearch" placeholder="Buscar flor, família ou semente…" /></div>
@@ -109,7 +113,10 @@
     </section>
 
     <section id="fishing" class="view" aria-labelledby="fishing-title">
-      <div class="section-head"><div><div class="eyebrow">🎣 Temporada</div><h2 id="fishing-title">Pesca com foco</h2><p>Veja o que pode aparecer na estação escolhida, iscas compatíveis, chum preferido e marque o que já pegou.</p></div><a class="ghost-btn" href="https://sfl.world/info/fishing/type" target="_blank" rel="noopener">Abrir SFL.World ↗</a></div>
+      <div class="section-head">
+        <div><div class="eyebrow">🎣 Temporada</div><h2 id="fishing-title">Pesca com foco visual</h2><p>Identifique o peixe pela imagem, veja iscas, chum, dificuldade e estação, e marque tudo que já pescou.</p></div>
+        <a class="ghost-btn" href="https://sfl.world/info/fishing/type" target="_blank" rel="noopener">Abrir SFL.World ↗</a>
+      </div>
       <div class="progress-card"><div class="progress-top"><strong>Coleção de peixes</strong><span id="fishProgressText">0 / 0</span></div><div class="progress-track"><div id="fishProgress" class="progress-fill"></div></div></div>
       <div class="toolbar">
         <div class="search-wrap"><input id="fishSearch" placeholder="Buscar peixe, isca ou chum…" /></div>
@@ -127,7 +134,10 @@
     </section>
 
     <section id="crafting" class="view" aria-labelledby="crafting-title">
-      <div class="section-head"><div><div class="eyebrow">🛠️ Planejamento</div><h2 id="crafting-title">Crafting e investimentos</h2><p>Pesquise receitas de ferramentas e collectibles úteis, marque o que já fez e evite gastar recurso importante sem perceber.</p></div><a class="ghost-btn" href="https://sfl.world/info/crafting" target="_blank" rel="noopener">Abrir SFL.World ↗</a></div>
+      <div class="section-head">
+        <div><div class="eyebrow">🛠️ Planejamento</div><h2 id="crafting-title">Crafting com imagem e materiais</h2><p>Reconheça collectibles e ferramentas visualmente, veja os ingredientes com ícones e marque o que já construiu.</p></div>
+        <a class="ghost-btn" href="https://sfl.world/info/crafting" target="_blank" rel="noopener">Abrir SFL.World ↗</a>
+      </div>
       <div class="progress-card"><div class="progress-top"><strong>Itens marcados como feitos</strong><span id="craftProgressText">0 / 0</span></div><div class="progress-track"><div id="craftProgress" class="progress-fill"></div></div></div>
       <div class="toolbar">
         <div class="search-wrap"><input id="craftSearch" placeholder="Buscar item ou ingrediente…" /></div>
@@ -137,7 +147,10 @@
     </section>
 
     <section id="cooking" class="view" aria-labelledby="cooking-title">
-      <div class="section-head"><div><div class="eyebrow">🍳 Economia de XP</div><h2 id="cooking-title">Qual comida vale mais?</h2><p>Cadastre o preço em SFL de cada ingrediente e compare custo, XP por SFL e XP por dia. Os modificadores deixam você simular skills e boosts.</p></div><a class="ghost-btn" href="https://sfl.world/info/cooking" target="_blank" rel="noopener">Abrir SFL.World ↗</a></div>
+      <div class="section-head">
+        <div><div class="eyebrow">🍳 Economia de XP</div><h2 id="cooking-title">Qual comida vale mais?</h2><p>Receitas e ingredientes agora aparecem com ícones. Cadastre preços em SFL e compare custo, XP por SFL e XP por dia.</p></div>
+        <a class="ghost-btn" href="https://sfl.world/info/cooking" target="_blank" rel="noopener">Abrir SFL.World ↗</a>
+      </div>
 
       <div class="split">
         <aside class="panel sticky">
@@ -157,22 +170,36 @@
           <div class="toolbar">
             <div class="search-wrap"><input id="recipeSearch" placeholder="Buscar receita, ingrediente ou prédio…" /></div>
             <div id="recipeBuildingFilters" class="chip-row"></div>
-            <select id="recipeSort" class="compact-input" style="width:auto"><option value="xpDay">Ordenar: XP / dia</option><option value="xpSfl">Ordenar: XP / SFL</option><option value="xp">Ordenar: XP</option><option value="cost">Ordenar: menor custo</option><option value="time">Ordenar: menor tempo</option></select>
+            <select id="recipeSort" class="compact-input" style="width:auto">
+              <option value="xpDay">Ordenar: XP / dia</option>
+              <option value="xpSfl">Ordenar: XP / SFL</option>
+              <option value="xp">Ordenar: XP</option>
+              <option value="cost">Ordenar: menor custo</option>
+              <option value="time">Ordenar: menor tempo</option>
+            </select>
           </div>
-          <div class="callout" style="margin-bottom:12px"><span class="icon">💡</span><div><strong>Preço faltando não vira número inventado</strong><p>Quando algum ingrediente da receita não tem preço cadastrado, custo e XP/SFL aparecem como “—”. Assim você não toma decisão com um valor falso.</p></div></div>
-          <div class="table-wrap"><table><thead><tr><th>Receita</th><th>Prédio</th><th>Ingredientes</th><th>XP</th><th>Tempo</th><th>Custo SFL</th><th>XP / SFL</th><th>XP / dia</th></tr></thead><tbody id="recipeBody"></tbody></table></div>
+          <div class="callout" style="margin-bottom:12px"><span class="icon">💡</span><div><strong>Preço faltando não vira número inventado</strong><p>Se qualquer ingrediente estiver sem preço cadastrado, custo e XP/SFL ficam como “—”.</p></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Receita</th><th>Prédio</th><th>Ingredientes</th><th>XP</th><th>Tempo</th><th>Custo SFL</th><th>XP / SFL</th><th>XP / dia</th></tr></thead>
+              <tbody id="recipeBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="deliveries" class="view" aria-labelledby="deliveries-title">
-      <div class="section-head"><div><div class="eyebrow">📦 ROI de pedidos</div><h2 id="deliveries-title">Entregas que realmente compensam</h2><p>Destaque para os Goblins que pagam FLOWER/SFL. Monte o pedido que apareceu no jogo e veja o custo de mercado e a margem antes de entregar.</p></div><a class="ghost-btn" href="https://sfl.world/info/deliveries" target="_blank" rel="noopener">Abrir SFL.World ↗</a></div>
+      <div class="section-head">
+        <div><div class="eyebrow">📦 ROI de pedidos</div><h2 id="deliveries-title">Entregas que realmente compensam</h2><p>Monte o pedido que apareceu no jogo. Cada item selecionado recebe uma prévia visual e o site calcula custo, recompensa e lucro.</p></div>
+        <a class="ghost-btn" href="https://sfl.world/info/deliveries" target="_blank" rel="noopener">Abrir SFL.World ↗</a>
+      </div>
 
-      <div class="callout" style="margin-bottom:15px"><span class="icon">⚙️</span><div><strong>Os pedidos exatos são gerados no backend do jogo</strong><p>O código público atual expõe quais NPCs pagam Coins, FLOWER ou Tickets e seus levels, mas não a tabela completa de combinações geradas pelo servidor. Por isso o calculador abaixo usa o pedido que apareceu para você, evitando presumir um pool desatualizado.</p></div></div>
+      <div class="callout" style="margin-bottom:15px"><span class="icon">⚙️</span><div><strong>Os pedidos exatos são gerados no backend do jogo</strong><p>O companion não inventa um pool fixo. Você reproduz o pedido atual que recebeu e calcula se vale comprar os itens para entregar.</p></div></div>
 
       <div class="grid grid-3" id="sflNpcGrid"></div>
 
-      <div class="section-head"><div><h2>Calculadora de lucro da entrega</h2><p>Use os mesmos preços cadastrados na área Cozinha. Você pode montar qualquer pedido atual do jogo.</p></div></div>
+      <div class="section-head"><div><h2>Calculadora de lucro da entrega</h2><p>Use os mesmos preços em SFL cadastrados na área Cozinha.</p></div></div>
       <div class="panel">
         <div class="delivery-calc">
           <div class="field"><label>NPC</label><select id="deliveryNpc"></select></div>
@@ -200,7 +227,10 @@
   </nav>
 
   <footer class="footer">
-    <div class="shell footer-inner"><span>SFL Companion · ferramenta independente e não oficial.</span><span>Dados de mecânica: código público do Sunflower Land · referências rápidas: SFL.World.</span></div>
+    <div class="shell footer-inner">
+      <span>SFL Companion · ferramenta independente e não oficial.</span>
+      <span>Imagens públicas: repositório oficial do Sunflower Land. Alguns assets Sunnyside/protegidos usam fallback visual.</span>
+    </div>
   </footer>
 
   <script src="./data.js"></script>
